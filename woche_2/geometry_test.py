@@ -1,4 +1,4 @@
-from geometry import circle_area, circle_circumference, sphere_volume, sphere_surface_area, cylider_surface_area, cylinder_volume
+from mylib.geometry import circle_area, circle_circumference, sphere_volume, sphere_surface_area, cylider_surface_area, cylinder_volume
 
 #Tests
 radius = 3
