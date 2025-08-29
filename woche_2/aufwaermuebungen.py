@@ -1,14 +1,4 @@
-def ifac(num):
-    factorial = 1
-    for i in range(1, num + 1):
-        factorial *= i
-    return factorial
-
-def rfac(num):
-    if num == 1:
-        return 1
-    else:
-        return num * rfac(num - 1)
+from mylib.math import ifac, rfac
 
 def count_words(text):
     words = text.split()
@@ -23,7 +13,7 @@ def count_words(text):
 
 
 def roman_to_decimal(roman_number):
-    translation_table = {"I" : 1, "V" : 5, "X": 10, "L":50, "C":100, "M":1000}
+    translation_table = {"I" : 1, "V" : 5, "X": 10, "L":50, "C":100, "D":500, "M":1000}
     return 0
 
 #Tests
