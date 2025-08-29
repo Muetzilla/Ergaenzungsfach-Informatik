@@ -344,4 +344,5 @@ poetry.toml
 # LSP config files
 pyrightconfig.json
 .ipynb_checkpoints
+/anaconda_projects
 # End of https://www.toptal.com/developers/gitignore/api/python,pycharm,pycharm+all
