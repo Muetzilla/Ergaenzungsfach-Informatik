@@ -41,15 +41,14 @@ def bisect(func, a, b, epsilon):
 
 
 # Findet alle Nullstellen in einem Intervall indem es das Intervall in kleinere Intervalle aufteilt und in jedem Intervall nach einer Nullstelle sucht
-def multi_zero_finder(func, a, b, epsilon):
-    assert a != b, f"Das Intervall darf nicht leer sein: a {a} == b {b} func: {func}"  # Schaut, ob die Bedingung a != b erfüllt ist, wenn nicht wird eine Fehlermeldung ausgegeben
-    if a > b:
-        a, b = b, a
+def zeros(func, links, rechts, delta,epsilon):
+    assert links != rechts, f"Das Intervall darf nicht leer sein: a {links} == b {rechts} func: {func}"  # Schaut, ob die Bedingung a != b erfüllt ist, wenn nicht wird eine Fehlermeldung ausgegeben
+    if links > rechts:
+        links, rechts = rechts, links
     nullstellen = []
-    interval_size = round((abs(a) + b) / 10000, 9)
-    left_value = a
-    while left_value < b:
-        if func(left_value) * func(left_value + interval_size) < 0:
-            nullstellen.append(bisect(func, left_value, left_value + interval_size, epsilon))
-        left_value += interval_size
+    left_value = links
+    while left_value < rechts:
+        if func(left_value) * func(left_value + delta) < 0:
+            nullstellen.append(bisect(func, left_value, left_value + delta, epsilon))
+        left_value += delta
     return nullstellen
