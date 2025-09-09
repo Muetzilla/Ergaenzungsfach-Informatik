@@ -22,14 +22,13 @@ def func6(value):
 epsilon = 0.000000001
 links = -10
 rechts = 10
-delta = (abs(links) + rechts) / 1000
 print(f"Eine Nullstelle von f1 ist: {bisect(func1, -2.7, 2, epsilon)}")
 print(f"Eine Nullstelle von f2 ist: {bisect(func2, -1.5, 2.5, epsilon)}")
 print(f"Eine Nullstelle von f3 ist: {bisect(func3, -2.7, 2, epsilon)}")
 print("--------------------")
-print(f"Alle Nullstellen der f1 sind: {zeros(func1, links, rechts,delta ,epsilon)}")
-print(f"Alle Nullstellen der f2 sind: {zeros(func2, links, rechts,delta, epsilon)}")
-print(f"Alle Nullstellen der f3 sind: {zeros(func3, links, rechts,delta, epsilon)}")
-print(f"Alle Nullstellen der f4 sind: {zeros(func4, -2, 2, delta, epsilon)}")
-print(f"Alle Nullstellen der f5 sind: {zeros(func5, links, rechts, delta, epsilon)}")
-print(f"Alle Nullstellen der f6 sind: {zeros(func6, links, rechts, delta, epsilon)}")
+print(f"Alle Nullstellen der f1 sind: {zeros(func1, links, rechts)}")
+print(f"Alle Nullstellen der f2 sind: {zeros(func2, links, rechts)}")
+print(f"Alle Nullstellen der f3 sind: {zeros(func3, links, rechts)}")
+print(f"Alle Nullstellen der f4 sind: {zeros(func4, -2, 2)}")
+print(f"Alle Nullstellen der f5 sind: {zeros(func5, links, rechts)}")
+print(f"Alle Nullstellen der f6 sind: {zeros(func6, links, rechts)}")
