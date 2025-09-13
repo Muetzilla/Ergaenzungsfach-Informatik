@@ -1,14 +1,7 @@
 from math import sin
 from mylib.zeros import bisect, zeros
+from mylib.functions import *
 
-def func1(value):
-    return -2 * value - 3
-
-def func2(value):
-    return value ** 2 - 4
-
-def func3(value):
-    return value ** 3 - 2 * value
 
 def func4(value):
     return sin(value ** 4 - 3)
