@@ -1,5 +1,5 @@
 import matplotlib
-# matplotlib.use("TkAgg")
+matplotlib.use("TkAgg")
 import matplotlib.pyplot as plt
 from mylib.zeros import steigung, minmax, maxima, minima
 from mylib.functions import *
