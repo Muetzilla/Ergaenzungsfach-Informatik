@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from mylib.zeros import steigung, minmax, maxima, minima
 from mylib.functions import *
 
-func = func2
+func = func6
 left_boundary = -3
 right_boundary = 3
 accuracy = 4

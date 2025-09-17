@@ -76,3 +76,12 @@ def minima(func, links, rechts, epsilon=1.0e-8):
         if steigung(func, minmax_values[i] + epsilon) > steigung(func, minmax_values[i] - epsilon):
             minima_elements.append(minmax_values[i])
     return minima_elements
+
+
+def generiere_steigungsfunktion(func, delta_x):
+    delta_x_halbe = delta_x / 2
+
+    def steigungfunktion(x):
+        return (func(x + delta_x_halbe) - func(x - delta_x_halbe)) / delta_x
+
+    return steigungfunktion

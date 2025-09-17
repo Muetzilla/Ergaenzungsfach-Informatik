@@ -25,7 +25,7 @@ def func4(x):
 
 def func5(x):
     """
-    3 * e^x * x^2
+    3 * e^(-x) * x^2
     """
     return 3 * np.exp(-x) * x ** 2
 
@@ -34,3 +34,27 @@ def sin(x):
     sin(x)
     """
     return np.sin(x)
+
+def func6(x):
+    """
+    x^2
+    """
+    return x ** 2
+
+def func7(x):
+    """
+    x^3 - 7x + 1
+    """
+    return x ** 3 - 7 * x + 1
+
+def funcSPAMM(x):
+    """
+    e^x - x^2
+    """
+    return np.exp(x) - x ** 2
+
+def funcSPAMM2(x):
+    """
+    2 * sin(x) + e^x
+    """
+    return 2 * np.sin(x) + np.exp(x)
