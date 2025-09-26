@@ -85,3 +85,26 @@ def generiere_steigungsfunktion(func, delta_x):
         return (func(x + delta_x_halbe) - func(x - delta_x_halbe)) / delta_x
 
     return steigungfunktion
+
+def newton(f, x_0, delta = 1e-8, epsilon = 1e-8):
+    """
+    :param f: Die Funktion einer Variable
+    :param x_0: Den Startwert der Suche
+    :param epsilon:
+    :param delta:
+    :return: Die x Koordinate einer Nullstelle der Funktion f
+    """
+    xn = x_0
+    max_iterations = 1000
+
+
+    for i in range(max_iterations):
+        xn_minus_1 = xn
+        if steigung(f, xn) == 0:
+            xn = xn - f(xn) / delta
+        xn = xn - f(xn) / steigung(f, xn)
+        # print(xn)
+        if abs(xn - xn_minus_1) <= delta or abs(f(xn)) <= epsilon:
+            break
+
+    return round(xn,8)
