@@ -17,10 +17,14 @@ class BankKonto:
         self.einzahlung(-betrag)
 
 
-def ueberweisung(konto1, konto2, betrag):
-    # Es wird die Währung von Konto 1 verwendet.
-    konto1.auszahlung(betrag)
-    konto2.einzahlung(betrag)
+def ueberweisung(konto1, konto2, betrag, currency, wechselkurse):
+    konto1.auszahlung(convert(betrag, currency, konto1.currency, wechselkurse))
+    konto2.einzahlung(convert(betrag, currency, konto2.currency, wechselkurse))
+
+
+def convert(amount, currency_from, currency_to, wechselkurse):
+    return amount / wechselkurse[currency_to] * wechselkurse[currency_from]
+
 
 class Person:
     def __init__(self, vorname, nachname, geburtsdatum):
