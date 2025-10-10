@@ -11,11 +11,12 @@ konto2 = BankKonto("2", maurice, betrag=2000.0)
 konto3 = BankKonto("3", franz, betrag=3000.0)
 konto4 = BankKonto("4", max, currency="AUD",betrag=7000.0)
 konto5 = BankKonto("5", maurice, currency="EUR", betrag=30000.0)
-verfuegbare_waehrungen = ["USD", "NOK", "EUR", "GBP", "JPY", "CAD", "AUD"]
+verfuegbare_waehrungen = ["USD", "NOK", "EUR", "GBP", "JPY", "CAD", "AUD", "BRL", "CNY", "INR", "RUB", "TRY", "ZAR", "CZK", "PLN", "ISK", "MXN", "SEK"]
 
 wechselkurse = {}
 for waehrung in verfuegbare_waehrungen:
     wechselkurse[waehrung] =  yahoo_fx_rate(waehrung, "CHF")
+wechselkurse["CHF"] = 1.0
 # wechselkurse = {"USD": 0.79, "BAM": 0.48, "NOK": 0.08, "EUR":0.93,"GBP":0.93, "CHF":1., "JPY": 0.0054, "CAD": 0.57, "AUD": 0.52} # Wie viele CHF pro Währung
 
 def print_wechselkurse():
@@ -62,7 +63,7 @@ for konto in [konto1, konto2, konto3, konto4, konto5]:
 personen = [max, maurice, franz]
 
 while True:
-    eingabe = input("Was möchten Sie tun? (e)einzahlen, (a)auszahlen, (t)überweisung, (x)beenden (s)alle anzeigen (n)neuer Kunde (k) neues Konto anlegen (w)Währungen anzeigen (c)change > ")
+    eingabe = input("Was möchten Sie tun? (e)einzahlen (a)auszahlen (t)überweisung (s)alle anzeigen (n)neuer Kunde (k)neues Konto anlegen (w)Währungen anzeigen (c)change (x)beenden > ")
     if eingabe == "x":
         print("Exit")
         break

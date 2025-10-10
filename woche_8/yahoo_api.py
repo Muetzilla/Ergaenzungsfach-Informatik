@@ -30,7 +30,7 @@ def yahoo_fx_rate(base: str, quote: str = "CHF") -> float:
 
 # --- Beispielnutzung ---
 if __name__ == "__main__":
-    for c in ["EUR", "USD", "GBP", "JPY", "CAD", "AUD", "NOK"]:
+    for c in ["USD", "NOK", "EUR", "GBP", "JPY", "CAD", "AUD", "BRL", "CNY", "INR", "RUB", "TRY", "ZAR", "CZK", "PLN", "ISK", "MXN", "SEK"]:
         try:
             print(f"1 {c} -> CHF =", yahoo_fx_rate(c, "CHF"))
         except Exception as e:
