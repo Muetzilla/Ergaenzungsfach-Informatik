@@ -23,7 +23,7 @@ def ueberweisung(konto1, konto2, betrag, currency, wechselkurse):
 
 
 def convert(amount, currency_from, currency_to, wechselkurse):
-    return amount / wechselkurse[currency_to] * wechselkurse[currency_from]
+    return amount * wechselkurse[currency_from] / wechselkurse[currency_to]
 
 
 class Person:
