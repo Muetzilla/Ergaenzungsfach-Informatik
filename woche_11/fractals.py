@@ -6,7 +6,7 @@ t.hideturtle()
 
 turtle.tracer(0)
 
-ANGLE = 60
+ANGLE = 25
 
 def draw(size):
     if size < 1:

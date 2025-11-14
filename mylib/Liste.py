@@ -1,93 +1,89 @@
+from mylib.Knoten import Knoten
 class Liste:
-    def __init__(self, anker):
+    def __init__(self, anker=None):
         self.anker = anker
 
-
     def __str__(self):
-        wholeList = str(self.anker.inhalt) + ", "
-        next_element = self.anker.naechster
-        while next_element.naechster is not None:
-            wholeList += str(next_element.inhalt) + ", "
-            next_element = next_element.naechster
-        wholeList += str(next_element.inhalt) + ", "
-        while next_element.vorheriger is not None:
-            wholeList += str(next_element.inhalt) + ", "
-            next_element = next_element.vorheriger
-        wholeList += str(next_element.inhalt)
-        return wholeList
+        return ", ".join(str(k.inhalt) for k in self.iter_knoten())
+
+    def iter_knoten(self):
+        current = self.anker
+        while current is not None:
+            yield current
+            current = current.naechster
 
     def __iter__(self):
-        return self
+        for knoten in self.iter_knoten():
+            yield knoten.inhalt
+
 
     def vorherige_setzen(self):
+        prev = None
         current = self.anker
+        while current is not None:
+            current.vorheriger = prev
+            prev = current
+            current = current.naechster
+
+    def finde_letzten(self):
+        current = self.anker
+        if current is None:
+            return None
         while current.naechster is not None:
-            next_knoten = current.naechster
-            next_knoten.vorheriger = current
-            current = next_knoten
+            current = current.naechster
+        return current
 
+    def add_knoten(self, new_knoten):
+        if self.anker is None:
+            self.anker = new_knoten
+            return
+        last = self.finde_letzten()
+        last.naechster = new_knoten
+        new_knoten.vorheriger = last
 
-    def add_element(self, new_knoten):
-        next_element = self.anker.naechster
-        while next_element.naechster is not None:
-            next_element = next_element.naechster
-        next_element.naechster = new_knoten
-        new_knoten.vorheriger = next_element
-
-    def add_element_via_knoten(self, new_knoten):
-       self.anker.add_knoten(new_knoten)
-
-    def findeLetzten(self):
-        next_element = self.anker.naechster
-        while next_element.naechster is not None:
-            next_element = next_element.naechster
-        return next_element
+    def append(self, inhalt):
+        self.add_knoten(Knoten(inhalt))
 
     def suchen(self, inhalt):
-        if self.anker.inhalt is inhalt:
-            return self.anker
-        next_element = self.anker.naechster
-        while next_element.naechster is not None:
-            if next_element.inhalt is inhalt:
-                return inhalt
-            next_element = next_element.naechster
+        current = self.anker
+        while current is not None:
+            if current.inhalt == inhalt:
+                return current
+            current = current.naechster
         return None
 
     def entfernen(self, inhalt):
-        if self.anker.inhalt is inhalt:
-            self.anker = self.anker.naechster
-        else:
-            next_element = self.anker.naechster
-            old_element = self.anker
-            while next_element.naechster is not None:
-                if next_element.inhalt is inhalt:
-                    old_element.naechster = next_element.naechster
-                    break
+        current = self.anker
+        while current is not None:
+            if current.inhalt == inhalt:
+                if current.vorheriger is not None:
+                    current.vorheriger.naechster = current.naechster
                 else:
-                    old_element = next_element
-                    next_element = next_element.naechster
+                    self.anker = current.naechster
+                if current.naechster is not None:
+                    current.naechster.vorheriger = current.vorheriger
+                return True
+            current = current.naechster
+        return False
 
     def einfuegen(self, neuer_knoten):
-        if neuer_knoten.inhalt < self.anker.inhalt:
-            tmp = self.anker
+        if self.anker is None:
             self.anker = neuer_knoten
-            self.anker.naechster = tmp
-        else:
-            next_element = self.anker.naechster
-            old_element = self.anker
-            print("Hinzuzufügender Knoten: ", neuer_knoten.inhalt)
-            while next_element.naechster is not None:
-                if old_element.inhalt <= neuer_knoten.inhalt <= next_element.inhalt:
-                    print("hinzufügen zwischen: ", old_element, " und ", next_element)
-                    old_element.naechster = neuer_knoten
-                    neuer_knoten.naechster = next_element
-                    print("neue folge: ", old_element,"->", neuer_knoten, "->", next_element)
-                old_element = next_element
-                next_element = next_element.naechster
-                print("Nun: ", old_element, "->", next_element)
-            if next_element.inhalt >= neuer_knoten.inhalt:
-                old_element.naechster = neuer_knoten
-                neuer_knoten.naechster = next_element
-            else:
-                next_element.naechster = neuer_knoten
-                neuer_knoten.naechster = None
+            return
+
+        if neuer_knoten.inhalt <= self.anker.inhalt:
+            neuer_knoten.naechster = self.anker
+            self.anker.vorheriger = neuer_knoten
+            self.anker = neuer_knoten
+            return
+
+        prev = self.anker
+        current = self.anker.naechster
+        while current is not None and current.inhalt < neuer_knoten.inhalt:
+            prev, current = current, current.naechster
+
+        neuer_knoten.naechster = current
+        neuer_knoten.vorheriger = prev
+        prev.naechster = neuer_knoten
+        if current is not None:
+            current.vorheriger = neuer_knoten

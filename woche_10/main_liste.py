@@ -64,13 +64,13 @@ print("#############################")
 print("#############################")
 print("Neunen Knoten einfach via Liste hizufügen:")
 
-liste_x1.add_element(Knoten.Knoten(1234, None, None))
+liste_x1.add_knoten(Knoten.Knoten(1234, None, None))
 liste_x1.vorherige_setzen()
 print("New Liste X1: ", liste_x1)
 print("#############################")
 print("Neunen Knoten einfach via Knoten hizufügen:")
 
-liste_y1.add_element_via_knoten(Knoten.Knoten(4321, None, None))
+# liste_y1.add_element_via_knoten(Knoten.Knoten(4321, None, None))
 liste_y1.vorherige_setzen()
 print("New Liste Y1: ", liste_y1)
 print("#############################")
@@ -84,10 +84,9 @@ K3.naechster = None
 print(folge)
 
 #Implementierung von findeLetzten() in Klasse Liste (Inhalt des letzten Knotens, hier 27):
-print("Inhalt des letzten Knotens:",folge.findeLetzten())
+print("Inhalt des letzten Knotens:",folge.finde_letzten())
 
-print("#############################")
-
+print("############ Liste 26 #################")
 knoten_3 = Knoten.Knoten(12, None)
 knoten_2 = Knoten.Knoten(6, knoten_3)
 knoten_1 = Knoten.Knoten(3, knoten_2)
@@ -96,18 +95,18 @@ liste26 = Liste.Liste(Knoten.Knoten(-4, knoten_0, None))
 liste26.vorherige_setzen()
 print("Liste 26: ", liste26)
 print("#############################")
-print("#############################")
+print("############# Suchen von Elementen: ################")
 
 print("Der gefundene Knoten:", liste26.suchen(6))
 print("Der gefundene Knoten:", liste26.suchen(-4))
 print("Der gefundene Knoten:", liste26.suchen(633))
 print("#############################")
-print("#############################")
+print("############# Entfernen von Elementen: ################")
 print("Liste 26 alle Elemente: ", liste26)
 liste26.entfernen(6)
 print("Liste 26 knoten 2 entfernt: ", liste26)
 print("#############################")
-print("#############################")
+print("############# Einfügen von Elementen: ################")
 print("Liste 26 alle Elemente: ", liste26)
 liste26.einfuegen(Knoten.Knoten(11, None))
 liste26.einfuegen(Knoten.Knoten(-11, None))
@@ -116,45 +115,9 @@ liste26.einfuegen(Knoten.Knoten(8, None))
 liste26.einfuegen(Knoten.Knoten(8, None))
 print("Liste 26 eingefügter Knoten: ", liste26)
 print("#############################")
-print("#############################")
-print("Liste 26 iter: ", liste26.__iter__())
+print("############ Iteration: #################")
+# print("Liste 26 iter: ", liste26.__iter__())
 for i in liste26:
     print("Iterator Element: ", i)
 
 print("#############################")
-
-
-
-
-
-
-
-
-
-
-
-#Implementierung von append(inhalt) (am Schluss der Liste hinzufügen):
-# folge.append(10)
-# print(folge)
-
-
-#Aufgabe 1.27: Implementierung von suchen(inhalt):
-# print("Gefundener Knoten:", folge.suchen(10))
-
-
-#Aufgabe 1.28: Implementierung von entfernen(inhalt):
-# folge.entfernen(27)
-# folge.entfernen(13)
-# print(folge)
-
-#Aufgabe 1.29: Implementierung einfuegen(inhalt) unter Erhaltung der Ordnung:
-# folge.einfuegen(9)
-# print(folge)
-
-
-#Zusatzaufgabe (siehe Punkt 15 in der Aufgabenliste auf Teams): Liste mit Iterator traversieren
-# print("Liste mit for-loop traversieren")
-# for i in folge:
-#     print(i)
-
-#Aufgabe 1.30: Doppelt verkettete Liste
