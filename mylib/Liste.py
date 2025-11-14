@@ -9,14 +9,30 @@ class Liste:
         while next_element.naechster is not None:
             wholeList += str(next_element.inhalt) + ", "
             next_element = next_element.naechster
+        wholeList += str(next_element.inhalt) + ", "
+        while next_element.vorheriger is not None:
+            wholeList += str(next_element.inhalt) + ", "
+            next_element = next_element.vorheriger
         wholeList += str(next_element.inhalt)
         return wholeList
+
+    def __iter__(self):
+        return self
+
+    def vorherige_setzen(self):
+        current = self.anker
+        while current.naechster is not None:
+            next_knoten = current.naechster
+            next_knoten.vorheriger = current
+            current = next_knoten
+
 
     def add_element(self, new_knoten):
         next_element = self.anker.naechster
         while next_element.naechster is not None:
             next_element = next_element.naechster
         next_element.naechster = new_knoten
+        new_knoten.vorheriger = next_element
 
     def add_element_via_knoten(self, new_knoten):
        self.anker.add_knoten(new_knoten)

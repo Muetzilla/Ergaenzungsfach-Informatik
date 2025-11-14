@@ -1,7 +1,8 @@
 class Knoten:
-    def __init__(self, inhalt, naechster):
+    def __init__(self, inhalt, naechster, vorheriger = None):
         self.inhalt = inhalt
         self.naechster = naechster
+        self.vorheriger = vorheriger
 
 
     def __str__(self):
