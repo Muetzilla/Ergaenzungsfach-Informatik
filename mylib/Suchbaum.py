@@ -1,3 +1,5 @@
+from graphviz import Digraph
+
 class Suchbaum:
     def __init__(self, anker):
         self.anker = anker
@@ -32,14 +34,75 @@ class Suchbaum:
         neuer_knoten.parent = parent
 
     def __str__(self):
-        def traverse(node, depth):
-            if node is None:
-                return ""
-            indent = "-" * depth
-            result = f"{indent}{node.name}\n"
-            result += traverse(node.left_child, depth + 1)
-            result += traverse(node.right_child, depth + 1)
-            return result
+        anzeige = "-"
+        if self.anker is not None:
+            anzeige += str(self.anker.key)
+            anzeige += "-"
 
-        return traverse(self.anker, 0)
+        def add(node):
+            nonlocal anzeige
+            if node.left_child is not None:
+                anzeige += str(node.left_child.key)
+                anzeige += "-"
+                add(node.left_child)
+            if node.right_child is not None:
+                anzeige += str(node.right_child.key)
+                anzeige += "-"
+                add(node.right_child)
+
+        add(self.anker)
+        return anzeige
+
+    def inorder_traversal(self, node, result):
+        if node is not None:
+            self.inorder_traversal(node.left_child, result)
+            result.append(node.key)
+            self.inorder_traversal(node.right_child, result)
+        return result
+
+    def preorder_traversal(self, node, result):
+        if node is not None:
+            result.append(node.key)
+            self.preorder_traversal(node.left_child, result)
+            self.preorder_traversal(node.right_child, result)
+        return result
+
+    def postorder_traversal(self, node, result):
+        if node is not None:
+            self.postorder_traversal(node.left_child, result)
+            self.postorder_traversal(node.right_child, result)
+            result.append(node.key)
+
+        return result
+
+
+    # def plot(self):
+    #     plot = Digraph(format="png", graph_attr={"root": str(self.anker.key)})
+    #
+    #     def add_edges(node):
+    #         if node.left_child is not None:
+    #             plot.edge(str(node.key), str(node.left_child.key), color="red")
+    #             add_edges(node.left_child)
+    #         if node.right_child is not None:
+    #             plot.edge(str(node.key), str(node.right_child.key), color="green")
+    #             add_edges(node.right_child)
+    #
+    #     add_edges(self.anker)
+    #     plot.render(cleanup=True, filename="suchbaum_plot")
+    def plot(self):
+        dot = Digraph()
+        dot.node(str(self.anker.key))
+
+        def add_nodes_edges(node):
+            if node.left_child is not None:
+                dot.node(str(node.left_child.key))
+                dot.edge(str(node.key), str(node.left_child.key))
+                add_nodes_edges(node.left_child)
+            if node.right_child is not None:
+                dot.node(str(node.right_child.key))
+                dot.edge(str(node.key), str(node.right_child.key))
+                add_nodes_edges(node.right_child)
+
+        add_nodes_edges(self.anker)
+        dot.render('binary_tree', view=True, format='png')
 

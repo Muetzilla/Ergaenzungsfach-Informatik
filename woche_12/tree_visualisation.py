@@ -1,19 +1,12 @@
 import matplotlib.pyplot as plt
 
 data = """
-Ceto
--Amycus
---Bienor
----Mars
-----Venus
------Europa
---Echeclus
--Sedna
---Crantor
----Erde
---Eris
----Merkur
-----Jupiter
+- Amycus: 2002 GB10
+-- Bienor: 2000 QC243
+-- Echeclus: 2000 EC98
+- Sedna: 2003 VB12
+-- Crantor: 2002 GO9
+-- Eris: 2003 UB313
 """
 
 class Node:
