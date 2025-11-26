@@ -75,20 +75,6 @@ class Suchbaum:
 
         return result
 
-
-    # def plot(self):
-    #     plot = Digraph(format="png", graph_attr={"root": str(self.anker.key)})
-    #
-    #     def add_edges(node):
-    #         if node.left_child is not None:
-    #             plot.edge(str(node.key), str(node.left_child.key), color="red")
-    #             add_edges(node.left_child)
-    #         if node.right_child is not None:
-    #             plot.edge(str(node.key), str(node.right_child.key), color="green")
-    #             add_edges(node.right_child)
-    #
-    #     add_edges(self.anker)
-    #     plot.render(cleanup=True, filename="suchbaum_plot")
     def plot(self):
         dot = Digraph()
         dot.node(str(self.anker.key))
