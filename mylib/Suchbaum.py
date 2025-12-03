@@ -1,5 +1,4 @@
 from graphviz import Digraph
-from networkx.classes import number_of_nodes
 
 from mylib.Baumknoten import Baumknoten
 
@@ -156,4 +155,7 @@ class Suchbaum:
         depth(self.anker, 0)
         print("Summe der Tiefen:", guete_sum)
         print("Anzahl der Knoten:", guete_number_of_nodes)
-        return guete_sum / guete_number_of_nodes if guete_number_of_nodes > 0 else 0
+        if guete_number_of_nodes > 0:
+            return guete_sum / guete_number_of_nodes
+        else:
+            return 0
