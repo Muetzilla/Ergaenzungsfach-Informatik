@@ -1,4 +1,5 @@
 from mylib.Knoten import Knoten
+
 class Liste:
     def __init__(self, anker=None):
         self.anker = anker
