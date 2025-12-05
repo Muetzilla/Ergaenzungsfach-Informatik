@@ -96,4 +96,7 @@ class Liste:
         for inhalt in list:
             print(inhalt)
         """
-        raise NotImplementedError
+        knoten = self.anker
+        while knoten is not None:
+            yield knoten.inhalt
+            knoten = knoten.naechster

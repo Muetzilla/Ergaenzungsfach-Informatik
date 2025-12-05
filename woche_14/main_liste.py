@@ -43,3 +43,6 @@ print("Anzahl Kids: ", len(kids))
 
 for index, kid in enumerate(kids):
     print("Kind", index + 1, ":", kid)
+
+for kid in kids:
+    print("Kind", ":", kid)
