@@ -1,10 +1,10 @@
-class Knoten():
+class Knoten:
     def __init__(self, inhalt=0, naechster=None):
         self.inhalt = inhalt
         self.naechster = naechster
 
 
-class Liste():
+class Liste:
     def __init__(self, anker=None):
         self.anker = anker
 
@@ -62,25 +62,32 @@ class Liste():
             count += 1
         return None
 
+
     def __getitem__(self, index):
         """
         Adressoperator: Gibt Inhalt an der Position mit Index `index` zurück.
         Beispiel:
         a = liste[3]
         """
-        raise NotImplementedError
+        return self.finde_knoten(index).inhalt
 
     def __setitem__(self, index, inhalt):
         """
         Adressoperator: Überschreibt den Wert an Position mit Index `index` mit neuem Wert `inhalt`
         """
-        raise NotImplementedError
+        self.finde_knoten(index).inhalt = inhalt
 
     def einfuegen(self, index, inhalt):
         """
         Fügt Inhalt `inhalt` an Position mit Index `index` ein.
         """
-        raise NotImplementedError
+        if index == 0:
+            neuer_knoten = Knoten(inhalt=inhalt, naechster=self.anker)
+            self.anker = neuer_knoten
+        else:
+            vorheriger_knoten = self.finde_knoten(index - 1)
+            neuer_knoten = Knoten(inhalt=inhalt, naechster=vorheriger_knoten.naechster)
+            vorheriger_knoten.naechster = neuer_knoten
 
     def __iter__(self):
         """

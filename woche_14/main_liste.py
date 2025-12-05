@@ -18,6 +18,10 @@ print("Anzahl Kids: ", len(kids))
 knoten = kids.finde_knoten(3)
 print("Kind im Knoten 3: ", knoten.inhalt)
 
+knoten.inhalt = "Eva"
+print("-------------------")
+print("Kids: ", kids)
+
 kid = kids[3]
 print("Kind mit Index 3: ", kid)
 
