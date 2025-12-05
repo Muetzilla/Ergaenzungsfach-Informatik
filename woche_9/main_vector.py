@@ -1,4 +1,4 @@
-from mylib.vector import Vector
+from mylib.vector_1 import Vector
 
 a = Vector(2, 3)  # Instantiierung
 b = Vector(-1, 3)  # Instantiierung
