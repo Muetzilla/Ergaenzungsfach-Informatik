@@ -55,55 +55,76 @@ def plot_function(
     path = np.array(path)
     Z_path = func(path[:, 0], path[:, 1])
 
-    # Plot
-    fig = plt.figure()
-    ax = fig.add_subplot(111, projection="3d")
+    # Plot 1: 3D Oberfläche
+    fig1 = plt.figure(figsize=(10, 8))
+    ax1 = fig1.add_subplot(111, projection="3d")
 
     # Oberfläche mit Farbverlauf
-    surf = ax.plot_surface(X, Y, Z, cmap="viridis", alpha=0.9)
+    surf = ax1.plot_surface(X, Y, Z, cmap="viridis", alpha=0.9)
 
     # Colorbar
-    fig.colorbar(surf, ax=ax, shrink=0.6, label="Funktionswert")
+    fig1.colorbar(surf, ax=ax1, shrink=0.6, label="Funktionswert")
+
+    # Labels
+    ax1.set_xlabel("x")
+    ax1.set_ylabel("y")
+    ax1.set_zlabel("f(x, y)")
+    ax1.set_title(title + " - 3D Oberfläche")
+
+    # Plot 2: 2D Kontourplot mit Gradient Descent Pfad
+    fig2 = plt.figure(figsize=(10, 8))
+    ax2 = fig2.add_subplot(111)
+
+    # Konturplot
+    contour = ax2.contour(X, Y, Z, levels=20, cmap="viridis")
+    contourf = ax2.contourf(X, Y, Z, levels=20, cmap="viridis", alpha=0.6)
+    fig2.colorbar(contourf, ax=ax2, label="Funktionswert")
 
     # Gradient Descent Linie
-    ax.plot(
+    ax2.plot(
         path[:, 0],
         path[:, 1],
-        Z_path,
         color="red",
         marker="o",
-        label="Gradient Descent"
+        markersize=6,
+        linewidth=2,
+        label="Gradient Descent Pfad"
     )
 
     # Startpunkt
-    ax.scatter(
+    ax2.scatter(
         path[0, 0],
         path[0, 1],
-        Z_path[0],
         color="orange",
-        s=80,
-        label="Startpunkt"
+        s=150,
+        marker="*",
+        edgecolors="black",
+        linewidth=2,
+        label="Startpunkt",
+        zorder=5
     )
 
     # Minimum (letzter Punkt)
-    ax.scatter(
+    ax2.scatter(
         path[-1, 0],
         path[-1, 1],
-        Z_path[-1],
         color="blue",
-        s=80,
-        label="Minimum (approx.)"
+        s=150,
+        marker="*",
+        edgecolors="black",
+        linewidth=2,
+        label="Minimum (approx.)",
+        zorder=5
     )
 
     # Labels
-    ax.set_xlabel("x")
-    ax.set_ylabel("y")
-    ax.set_zlabel("f(x, y)")
-    ax.set_title(title)
-
-    ax.legend()
+    ax2.set_xlabel("x")
+    ax2.set_ylabel("y")
+    ax2.set_title(title + " - 2D Gradient Descent Pfad")
+    ax2.legend()
+    ax2.grid(True, alpha=0.3)
 
     if show:
         plt.show()
 
-    return fig, ax
+    return fig1, ax1, fig2, ax2

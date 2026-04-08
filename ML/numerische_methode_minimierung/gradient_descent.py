@@ -1,5 +1,4 @@
 # Gradient Descend für f(x,y) = (x-2)^2 + 10(y-4)^2 -1
-from ML.ml_lib  import *
 from ML.ml_lib.visualize import plot_function
 
 
@@ -34,4 +33,4 @@ for i in range(n):
 print(f"\nMinimum bei: x = {x_new:.4f} y = {y_new:.4f}")
 print(f"\nFunktionswert an Minimum:{ calc_function(x_new, y_new):.6f}")
 
-plot_function(calc_function,start_point=(x_start, y_start), grad=grad_f(x_start, y_start), x_range=(-10, 10), y_range=(-10, 10))
+plot_function(calc_function, start_point=(x_start, y_start), grad=grad_f, x_range=(-10, 10), y_range=(-10, 10))
