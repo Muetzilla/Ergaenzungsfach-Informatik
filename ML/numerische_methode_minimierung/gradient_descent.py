@@ -1,6 +1,6 @@
 # Gradient Descend für f(x,y) = (x-2)^2 + 10(y-4)^2 -1
-from ML.lib  import *
-from ML.lib.visualize import plot_function
+from ML.ml_lib  import *
+from ML.ml_lib.visualize import plot_function
 
 
 def calc_part_derivative_x(x, y):
