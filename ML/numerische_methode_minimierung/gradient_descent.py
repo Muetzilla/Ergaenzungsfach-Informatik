@@ -1,12 +1,17 @@
 # Gradient Descend für f(x,y) = (x-2)^2 + 10(y-4)^2 -1
-from ML.ml_lib.visualize import plot_function
+from ML.ml_lib.visualize import plot_function, draw_conturplot
 
 
-def calc_part_derivative_x(x, y):
+def calc_part_derivative_x(x):
     return 2 * (x - 2)
 
-def calc_part_derivative_y(x, y):
+def calc_part_derivative_y(y):
     return 20 * (y - 4)
+
+def grad_both(x, y):
+    dfdx = 2 * (x - 2)
+    dfdy = 20 * (y - 4)
+    return dfdx, dfdy
 
 def grad_f(x, y):
     return 2 * (x - 2), 20 * (y - 4)
@@ -33,4 +38,5 @@ for i in range(n):
 print(f"\nMinimum bei: x = {x_new:.4f} y = {y_new:.4f}")
 print(f"\nFunktionswert an Minimum:{ calc_function(x_new, y_new):.6f}")
 
-plot_function(calc_function, start_point=(x_start, y_start), grad=grad_f, x_range=(-10, 10), y_range=(-10, 10))
+#plot_function(calc_function, start_point=(x_start, y_start), grad=grad_f, x_range=(-10, 10), y_range=(-10, 10))
+draw_conturplot(calc_function, grad=grad_both, start_point=(x_start, y_start), learning_rate=0.1, steps=50)

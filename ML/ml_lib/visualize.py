@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib
 
 
 def plot_function(
@@ -35,6 +36,7 @@ def plot_function(
         Anzahl Iterationen
 
     """
+   # matplotlib.use("TkAgg")
 
     # Grid erstellen
     x = np.linspace(x_range[0], x_range[1], resolution)
@@ -73,6 +75,7 @@ def plot_function(
 
     # Plot 2: 2D Kontourplot mit Gradient Descent Pfad
     fig2 = plt.figure(figsize=(10, 8))
+    fig2.canvas.manager.set_window_title("2D Gradient Descent Pfad")
     ax2 = fig2.add_subplot(111)
 
     # Konturplot
@@ -128,3 +131,29 @@ def plot_function(
         plt.show()
 
     return fig1, ax1, fig2, ax2
+
+def draw_conturplot(function, x_values, y_values, x_start, y_start,min_range, max_range):
+    # Gitter für Konturplot
+    X = np.linspace(min_range, max_range, 400)
+    Y = np.linspace(min_range, max_range, 400)
+    X, Y = np.meshgrid(X, Y)
+    Z = function(X, Y)
+
+    # Plot
+    plt.figure(figsize=(8, 6))
+    contours = plt.contour(X, Y, Z, levels=20)
+    plt.clabel(contours, inline=True, fontsize=8)
+
+    # Pfad des numerischen Verfahrens
+    plt.plot(x_values, y_values, marker="o", label="Numerischer Gradient Descent")
+
+    # Start- und Endpunkt markieren
+    plt.scatter(x_start, y_start, label="Startpunkt")
+    plt.scatter(x_values, y_values, label="Gefundenes Minimum")
+
+    plt.xlabel("x")
+    plt.ylabel("y")
+    plt.title("Numerischer Gradient Descent auf f(x,y)")
+    plt.legend()
+    plt.grid(True)
+    plt.show()
