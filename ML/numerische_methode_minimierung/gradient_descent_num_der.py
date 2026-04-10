@@ -1,7 +1,5 @@
 # Gradient Descend für f(x,y) = (x-2)^2 + 10(y-4)^2 -1 mit Numerischer Ableitung
-from ML.ml_lib  import *
 from ML.ml_lib.visualize import plot_function, draw_conturplot
-from mylib import vector_1
 
 def grad_numeric(x, y, h=1e-5):
     dfdx = (calc_function(x + h, y) - calc_function(x, y)) / h
