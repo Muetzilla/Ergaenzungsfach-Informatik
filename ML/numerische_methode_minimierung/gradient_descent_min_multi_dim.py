@@ -1,6 +1,5 @@
 from ML.ml_lib.minimize import minimize
 
-
 def f_2d(x):
     return (x[0] - 2) ** 2 + 10 * (x[1] - 4) ** 2 - 1
 
@@ -26,10 +25,10 @@ print(f"Funktionswert: {f_3d(result_3d):.6f}\n")
 
 
 def f_4d(x):
-    return (x[0] - 1) ** 2 + (x[1] - 2) ** 2 + (x[2] - 3) ** 2 + (x[3] - 4) ** 2
+    return (x[0] - 1) ** 2 + (x[1] - 2) ** 3 + (x[2] - 3) ** 2 + (x[3] - 4) ** 2
 
 print("=" * 50)
-print("4D Funktion: (x-1)² + (y-2)² + (z-3)² + (w-4)²")
+print("4D Funktion: (x-1)² + (y-2)**3 + (z-3)² + (w-4)²")
 print("=" * 50)
 x_start_4d = [5, 5, 5, 5]
 result_4d = minimize(f_4d, x_start_4d)

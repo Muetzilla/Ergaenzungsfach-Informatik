@@ -12,8 +12,7 @@ def grad_numeric_vector(f, x, h=1e-5):
     return gradient_list
 
 
-def minimize(f, x_start):
-    alpha = 0.01
+def minimize(f, x_start,  alpha = 0.01):
     max_iterations = 500
     tolerance = 1e-6
     x_new = x_start.copy()
