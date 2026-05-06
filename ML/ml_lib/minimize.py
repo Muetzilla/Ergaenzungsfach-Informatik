@@ -15,7 +15,9 @@ def grad_numeric_vector(f, x, h=1e-5):
 def minimize(f, x_start,  alpha = 0.01):
     max_iterations = 500
     tolerance = 1e-6
+    func_val_tolerance = 1e-6
     x_new = x_start.copy()
+
 
     for iteration in range(max_iterations):
         x_old = x_new.copy()
@@ -28,6 +30,10 @@ def minimize(f, x_start,  alpha = 0.01):
         if vector_length(diff) < tolerance:
             print(f"Konvergiert nach {iteration + 1} Iterationen")
             break
+        elif abs(f(x_new) - f(x_old)) < func_val_tolerance:
+            print(f"Funktionswert konvergiert nach {iteration + 1} Iterationen")
+            break
+
     return x_new
 
 
