@@ -16,26 +16,20 @@ def minimize(f, x_start,  alpha = 0.01):
     max_iterations = 500
     tolerance = 1e-6
     x_new = x_start.copy()
-    y_new = f(x_new)
 
     for iteration in range(max_iterations):
         x_old = x_new.copy()
-        y_old = y_new
         grad = grad_numeric_vector(f, x_new)
 
         for i in range(len(x_new)):
             x_new[i] = x_old[i] - alpha * grad[i]
 
-        y_new = f(x_new)
-
-        if abs(y_new - y_old) < tolerance:
+        diff = [x_new[i] - x_old[i] for i in range(len(x_new))]
+        if vector_length(diff) < tolerance:
             print(f"Konvergiert nach {iteration + 1} Iterationen")
             break
-
     return x_new
 
 
-
-
-
-
+def vector_length(x):
+    return sum([xi ** 2 for xi in x]) ** 0.5

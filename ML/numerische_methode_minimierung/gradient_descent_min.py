@@ -4,5 +4,5 @@ def f(x):
 
 x_start = [5, -12]
 result = minimize(f, x_start)
-print(f"Optimum: {result}")
-print(f"Funktionswert: {f(result):.6f}\n")
+print(f"Optimum liegt bei: {result}")
+print(f"Funktionswert bei diesem Optimum ist: {f(result):.6f}\n")
