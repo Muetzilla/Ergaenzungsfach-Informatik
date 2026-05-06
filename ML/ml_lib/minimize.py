@@ -13,14 +13,30 @@ def grad_numeric_vector(f, x, h=1e-5):
 
 
 def minimize(f, x_start):
-    #Abbruchbedingungen
-    max_iterations = 100
-    tolerance = 1e-6
-
-    y_start = f(x_start)
     alpha = 0.01
-    value_history = [(x_start, y_start)]
-    x_new, y_new = x_start, y_start
+    max_iterations = 500
+    tolerance = 1e-6
+    x_new = x_start.copy()
+    y_new = f(x_new)
+
+    for iteration in range(max_iterations):
+        x_old = x_new.copy()
+        y_old = y_new
+        grad = grad_numeric_vector(f, x_new)
+
+        for i in range(len(x_new)):
+            x_new[i] = x_old[i] - alpha * grad[i]
+
+        y_new = f(x_new)
+
+        if abs(y_new - y_old) < tolerance:
+            print(f"Konvergiert nach {iteration + 1} Iterationen")
+            break
+
+    return x_new
+
+
+
 
 
 
