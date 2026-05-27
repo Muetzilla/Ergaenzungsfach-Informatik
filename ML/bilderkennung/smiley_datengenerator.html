@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Smiley Datengenerator</title>
+<style>
+body{
+    font-family:Arial,sans-serif;
+    background:#f4f7fb;
+    margin:0;
+    padding:20px;
+}
+h1,h2,h3{margin-top:0}
+.controls,.panel{
+    background:white;
+    border-radius:16px;
+    padding:20px;
+    margin-bottom:20px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+.grid2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+.smiley-list{
+    display:flex;
+    flex-wrap:wrap;
+    gap:16px;
+}
+.card{
+    background:#fff;
+    border-radius:16px;
+    padding:12px;
+    width:150px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+    cursor:grab;
+}
+.pixel{
+    width:14px;
+    height:14px;
+    border:1px solid #ddd;
+}
+.on{background:#111;}
+.off{background:#fff;}
+.pixelgrid{
+    display:grid;
+    grid-template-columns:repeat(8,14px);
+    gap:1px;
+    width:max-content;
+    margin:auto;
+}
+.dropzone{
+    border:3px dashed #66a3ff;
+    background:#eef5ff;
+}
+button{
+    border:none;
+    background:#111;
+    color:white;
+    padding:10px 14px;
+    border-radius:10px;
+    cursor:pointer;
+}
+.copy-buttons{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:10px;
+}
+textarea{
+    width:100%;
+    height:260px;
+    margin-top:10px;
+    font-family:monospace;
+}
+</style>
+</head>
+<body>
+
+<h1>Smiley Datengenerator</h1>
+
+<div class="controls">
+    <label>Fröhliche:
+        <input type="number" id="happyCount" value="8" min="0">
+    </label>
+
+    <label style="margin-left:20px;">Traurige:
+        <input type="number" id="sadCount" value="8" min="0">
+    </label>
+
+    <label style="margin-left:20px;">Variation:
+        <input type="range" id="variation" min="0" max="100" value="35">
+        <span id="variationLabel">35%</span>
+    </label>
+
+    <button onclick="generate()">Neu generieren</button>
+</div>
+
+<div class="grid2">
+    <div class="panel">
+        <h2>Fröhliche Trainingsdaten</h2>
+        <div id="happyTrain" class="smiley-list"></div>
+    </div>
+
+    <div class="panel">
+        <h2>Traurige Trainingsdaten</h2>
+        <div id="sadTrain" class="smiley-list"></div>
+    </div>
+</div>
+
+<div class="panel dropzone" id="testZone">
+    <h2>Testdaten (Drag & Drop)</h2>
+    <div id="testData" class="smiley-list"></div>
+</div>
+
+<div class="panel">
+    <h2>Python-Ausgabe</h2>
+
+    <div class="copy-buttons">
+        <button onclick="copyTraining()">Nur Trainingsdaten kopieren</button>
+        <button onclick="copyTest()">Nur Testdaten kopieren</button>
+        <button onclick="copyAll()">Alles kopieren</button>
+    </div>
+
+    <textarea id="output"></textarea>
+</div>
+
+<script>
+let trainingData = [];
+let testData = [];
+
+function emptyGrid(){
+    return Array(64).fill(0);
+}
+
+function setPixel(g,r,c,v=1){
+    if(r>=0 && r<8 && c>=0 && c<8){
+        g[r*8+c]=v;
+    }
+}
+
+function makeSmiley(kind,variation){
+    const g=emptyGrid();
+
+    setPixel(g,2,2);
+    setPixel(g,2,5);
+
+    if(kind==="happy"){
+        setPixel(g,5,2);
+        setPixel(g,6,3);
+        setPixel(g,6,4);
+        setPixel(g,5,5);
+
+        if(Math.random()<variation/100){
+            setPixel(g,5,3);
+        }
+        if(Math.random()<variation/120){
+            setPixel(g,5,4);
+        }
+    }else{
+        setPixel(g,6,2);
+        setPixel(g,5,3);
+        setPixel(g,5,4);
+        setPixel(g,6,5);
+
+        if(Math.random()<variation/100){
+            setPixel(g,6,3);
+        }
+        if(Math.random()<variation/120){
+            setPixel(g,6,4);
+        }
+    }
+
+    const speckles=Math.floor(Math.random()*(variation/20));
+
+    for(let i=0;i<speckles;i++){
+        const idx=Math.floor(Math.random()*64);
+        g[idx]=1;
+    }
+
+    return g;
+}
+
+function createData(kind,count,variation){
+    const arr=[];
+
+    for(let i=0;i<count;i++){
+        arr.push({
+            id:crypto.randomUUID(),
+            kind,
+            y:kind==="happy"?1:0,
+            pixels:makeSmiley(kind,variation)
+        });
+    }
+
+    return arr;
+}
+
+function generate(){
+    const happy=parseInt(document.getElementById("happyCount").value);
+    const sad=parseInt(document.getElementById("sadCount").value);
+    const variation=parseInt(document.getElementById("variation").value);
+
+    trainingData=[
+        ...createData("happy",happy,variation),
+        ...createData("sad",sad,variation)
+    ];
+
+    testData=[];
+
+    render();
+}
+
+document.getElementById("variation").addEventListener("input",e=>{
+    document.getElementById("variationLabel").textContent=e.target.value+"%";
+});
+
+function createPixelGrid(pixels){
+    const div=document.createElement("div");
+    div.className="pixelgrid";
+
+    pixels.forEach(p=>{
+        const px=document.createElement("div");
+        px.className="pixel "+(p?"on":"off");
+        div.appendChild(px);
+    });
+
+    return div;
+}
+
+function createCard(item){
+    const card=document.createElement("div");
+    card.className="card";
+    card.draggable=true;
+
+    card.addEventListener("dragstart",e=>{
+        e.dataTransfer.setData("text/plain",item.id);
+    });
+
+    const title=document.createElement("h3");
+    title.textContent=item.kind==="happy"?"Fröhlich":"Traurig";
+
+    const label=document.createElement("p");
+    label.textContent="y = "+item.y;
+
+    card.appendChild(title);
+    card.appendChild(label);
+    card.appendChild(createPixelGrid(item.pixels));
+
+    return card;
+}
+
+function render(){
+    const happyTrain=document.getElementById("happyTrain");
+    const sadTrain=document.getElementById("sadTrain");
+    const test=document.getElementById("testData");
+
+    happyTrain.innerHTML="";
+    sadTrain.innerHTML="";
+    test.innerHTML="";
+
+    trainingData.filter(x=>x.kind==="happy")
+        .forEach(item=>happyTrain.appendChild(createCard(item)));
+
+    trainingData.filter(x=>x.kind==="sad")
+        .forEach(item=>sadTrain.appendChild(createCard(item)));
+
+    testData.forEach(item=>test.appendChild(createCard(item)));
+
+    updateOutput();
+}
+
+const testZone=document.getElementById("testZone");
+
+testZone.addEventListener("dragover",e=>{
+    e.preventDefault();
+});
+
+testZone.addEventListener("drop",e=>{
+    e.preventDefault();
+
+    const id=e.dataTransfer.getData("text/plain");
+
+    const item=trainingData.find(x=>x.id===id);
+
+    if(!item)return;
+
+    trainingData=trainingData.filter(x=>x.id!==id);
+    testData.push(item);
+
+    render();
+});
+
+function pythonList(name,data){
+    return `${name} = [\n` +
+        data.map(x=>`    ([${x.pixels.join(", ")}], ${x.y}),`).join("\n") +
+        `\n]`;
+}
+
+function getTrainingPython(){
+    const happy=trainingData.filter(x=>x.kind==="happy");
+    const sad=trainingData.filter(x=>x.kind==="sad");
+
+    return [
+        pythonList("froehliche_trainingsdaten",happy),
+        "",
+        pythonList("traurige_trainingsdaten",sad)
+    ].join("\n\n");
+}
+
+function getTestPython(){
+    const happy=testData.filter(x=>x.kind==="happy");
+    const sad=testData.filter(x=>x.kind==="sad");
+
+    return [
+        pythonList("froehliche_testdaten",happy),
+        "",
+        pythonList("traurige_testdaten",sad)
+    ].join("\n\n");
+}
+
+function updateOutput(){
+    document.getElementById("output").value=
+        getTrainingPython() + "\\n\\n" + getTestPython();
+}
+
+async function copyTraining(){
+    await navigator.clipboard.writeText(getTrainingPython());
+}
+
+async function copyTest(){
+    await navigator.clipboard.writeText(getTestPython());
+}
+
+async function copyAll(){
+    await navigator.clipboard.writeText(document.getElementById("output").value);
+}
+
+generate();
+</script>
+
+</body>
+</html>
