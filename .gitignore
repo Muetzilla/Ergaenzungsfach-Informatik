@@ -346,5 +346,5 @@ pyrightconfig.json
 .ipynb_checkpoints
 /anaconda_projects
 # End of https://www.toptal.com/developers/gitignore/api/python,pycharm,pycharm+all
-/dataset/test/
-/dataset/train/
+./dataset/test/
+./dataset/train/
