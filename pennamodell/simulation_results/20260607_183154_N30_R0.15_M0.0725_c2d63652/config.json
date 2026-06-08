@@ -1,0 +1,16 @@
+{
+    "genome_representation": "uint32_bitmask_with_Animal_class",
+    "num_initial_population": 30,
+    "initial_defect_probability": 0.04,
+    "max_years": 600,
+    "n_iterations": 10,
+    "Animal.num_genes": 32,
+    "Animal.max_deadly_mutations": 3,
+    "Animal.reproduction_probability": 0.15,
+    "Animal.min_reproduction_age": 8,
+    "Animal.max_reproduction_age": 28,
+    "Animal.num_descendents": 1,
+    "Animal.multiple_descendents_probability": 0.15,
+    "Animal.mutation_probability": 0.0725,
+    "Animal.radiation_mutation_probability": 0.00175
+}

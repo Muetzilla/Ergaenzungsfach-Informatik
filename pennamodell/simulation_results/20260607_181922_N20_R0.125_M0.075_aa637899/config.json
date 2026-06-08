@@ -1,0 +1,14 @@
+{
+    "num_initial_population": 20,
+    "num_genes": 32,
+    "initial_defect_probability": 0.04,
+    "max_years": 400,
+    "n_iterations": 10,
+    "Animal.max_deadly_mutations": 3,
+    "Animal.reproduction_probability": 0.125,
+    "Animal.min_reproduction_age": 8,
+    "Animal.num_descendents": 1,
+    "Animal.mutation_probability": 0.075,
+    "Animal.radiation_mutation_probability": 0.0025,
+    "Animal.max_reproduction_age": 28
+}
